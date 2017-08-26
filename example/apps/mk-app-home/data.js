@@ -10,7 +10,7 @@ export function getMeta() {
 			cols: 12,
 			rowHeight: 50,
 			layout: [
-				{ i: 'shortcuts', x: 0, y: 0, w: 12, h: 2 },
+				{ i: 'shortcuts', x: 0, y: 0, w: 12, h: 2, minW:6 },
 				{ i: 'chart', x: 0, y: 2, w: 8, h: 6, minW: 4, minH:6 },
 				{ i: 'list', x: 8, y: 2, w: 4, h: 6, minW: 4, minH:6 }
 			],
