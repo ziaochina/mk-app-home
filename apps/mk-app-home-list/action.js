@@ -1,45 +1,31 @@
 import React from 'react'
 import { action as MetaAction, AppLoader } from 'mk-meta-engine'
+import { fromJS } from 'immutable'
 import config from './config'
-import funImg from './img/photo.png'
+import moment from 'moment'
 
 class action {
     constructor(option) {
         this.metaAction = option.metaAction
         this.config = config.current
+        this.webapi = this.config.webapi
     }
 
     onInit = ({ component, injections }) => {
         this.component = component
         this.injections = injections
         injections.reduce('init')
+
+        this.load()
     }
 
-    getFunImg = () => funImg
-
-    openList = () => {
-        this.open('mk-app-person-list')
+    load = async (pagination, filter = {}) => {
+        const response = await this.webapi.homeMessage.query()
+        this.injections.reduce('load', response)
     }
 
-    openCard = () => {
-        this.open('mk-app-person-card')
-    }
-
-    openVoucher = () => {
-        this.open('mk-app-voucher')
-    }
-
-    openComplexTable = () => {
-        this.open('mk-app-complex-table')
-    }
-
-    openEditableTable = () => {
-        this.open('mk-app-editable-table')
-    }
-
-    open = (appName) => {
-        this.component.props.setPortalContent &&
-            this.component.props.setPortalContent(appName)
+    getListRowsCount = () => {
+        return this.metaAction.gf('data.list').size
     }
 
 }
